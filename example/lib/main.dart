@@ -160,7 +160,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RaisedButton(
               onPressed: () {
-                context.deleteSaveLocale();
               },
               child: Text(LocaleKeys.reset_locale).tr(),
             ),

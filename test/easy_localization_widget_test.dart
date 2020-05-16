@@ -3,7 +3,6 @@ import 'package:easy_localization/src/localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'utils/test_asset_loaders.dart';
 
 
@@ -37,7 +36,6 @@ class MyWidget extends StatelessWidget {
 }
 
 void main() {
-  SharedPreferences.setMockInitialValues({});
   testWidgets(
     '[EasyLocalization with  JsonAssetLoader]  test',
     (WidgetTester tester) async {
@@ -421,9 +419,6 @@ void main() {
 
   group('SharedPreferences SavedLocale NULL', () {
     setUp(() {
-      SharedPreferences.setMockInitialValues({
-        'locale': null,
-      });
     });
 
     testWidgets(
@@ -497,9 +492,6 @@ void main() {
 
   group('SharedPreferences saveLocale', () {
     setUpAll(() {
-      SharedPreferences.setMockInitialValues({
-        'locale': 'ar',
-      });
     });
 
     testWidgets(
@@ -532,9 +524,6 @@ void main() {
 
   group('SharedPreferences saveLocale', () {
     setUpAll(() {
-      SharedPreferences.setMockInitialValues({
-        'locale': 'ar_DZ',
-      });
     });
 
     testWidgets(
@@ -592,9 +581,6 @@ void main() {
   });
   group('SharedPreferences deleteSaveLocale()', () {
     setUpAll(() {
-      SharedPreferences.setMockInitialValues({
-        'locale': 'ar_DZ',
-      });
     });
     testWidgets(
       '[EasyLocalization] deleteSaveLocale  test',
@@ -614,7 +600,6 @@ void main() {
           await tester.pumpAndSettle();
 
           expect(EasyLocalization.of(_context).locale, Locale('ar', 'DZ'));
-          EasyLocalization.of(_context).deleteSaveLocale();
         });
       },
     );
