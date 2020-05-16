@@ -13,7 +13,6 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.16.0
-  shared_preferences: ^0.5.7
   args: ^1.5.2
   path: ^1.6.4
   flutter_localizations:

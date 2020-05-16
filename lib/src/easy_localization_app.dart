@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/src/widgets.dart';
 
 import 'widgets.dart';
@@ -133,7 +132,6 @@ class _EasyLocalizationState extends State<EasyLocalization> {
   void _init() async {
     Locale _savedLocale;
     Locale _osLocale;
-    if (widget.saveLocale) _savedLocale = await loadSavedLocale();
     if (_savedLocale == null && widget.startLocale != null) {
       locale = _getFallbackLocale(widget.supportedLocales, widget.startLocale);
       log('Start locale loaded ${locale.toString()}',
@@ -185,14 +183,6 @@ class _EasyLocalizationState extends State<EasyLocalization> {
     final _deviceLocale = await findSystemLocale();
     log('Device locale $_deviceLocale', name: 'Easy Localization');
     return localeFromString(_deviceLocale);
-  }
-
-  Future<Locale> loadSavedLocale() async {
-    final _preferences = await SharedPreferences.getInstance();
-    final _strLocale = _preferences.getString('locale');
-    final locale = _strLocale != null ? localeFromString(_strLocale) : null;
-
-    return locale;
   }
 
   @override
@@ -272,7 +262,6 @@ class _EasyLocalizationProvider extends InheritedWidget {
     // Check old locale
     if (locale != _locale) {
       assert(parent.supportedLocales.contains(locale));
-      if (parent.saveLocale) _saveLocale(locale);
       log('Locale set ${locale.toString()}', name: 'Easy Localization');
 
       bloc.onChange(Resource(
@@ -281,19 +270,6 @@ class _EasyLocalizationProvider extends InheritedWidget {
           assetLoader: parent.assetLoader,
           useOnlyLangCode: parent.useOnlyLangCode));
     }
-  }
-
-  void _saveLocale(Locale locale) async {
-    final _preferences = await SharedPreferences.getInstance();
-    await _preferences.setString('locale', locale.toString());
-    log('Locale saved ${locale.toString()}', name: 'Easy Localization');
-  }
-
-  /// Clears a saved locale from device storage
-  void deleteSaveLocale() async {
-    final _preferences = await SharedPreferences.getInstance();
-    await _preferences.setString('locale', null);
-    log('Saved locale deleted', name: 'Easy Localization');
   }
 
   @override

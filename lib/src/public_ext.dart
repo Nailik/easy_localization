@@ -111,7 +111,4 @@ extension BuildContextEasyLocalizationExtension on BuildContext {
   /// ```
   List<LocalizationsDelegate> get localizationDelegates =>
       EasyLocalization.of(this).delegates;
-
-  /// Clears a saved locale from device storage
-  void deleteSaveLocale() => EasyLocalization.of(this).deleteSaveLocale();
 }
